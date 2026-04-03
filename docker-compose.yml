@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  app:
+    build: .
+    container_name: ai-app-quran-memorizer
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=production
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.ai-quran-memorizer.rule=Host(`quran-memorizer.aaaaaaaaa9000.cloud`)"
+      - "traefik.http.routers.ai-quran-memorizer.entrypoints=websecure"
+      - "traefik.http.routers.ai-quran-memorizer.tls=true"
+      - "traefik.http.routers.ai-quran-memorizer.tls.certresolver=letsencrypt"
+      - "traefik.http.services.ai-quran-memorizer.loadbalancer.server.port=80"
+      - "traefik.docker.network=automation-stack_automation-network"
+networks:
+  default:
+    external:
+      name: automation-stack_automation-network
