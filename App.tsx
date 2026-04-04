@@ -13,6 +13,8 @@ type SurahInfo = {
 const availableSurahs: SurahInfo[] = [
   { number: 76, name: 'سورة الإنسان', englishName: 'Al-Insan' },
   { number: 75, name: 'سورة القيامة', englishName: 'Al-Qiyamah' },
+  { number: 73, name: 'سورة المزمل', englishName: 'Al-Muzzammil' },
+  { number: 72, name: 'سورة الجن', englishName: 'Al-Jinn' },
 ];
 
 
@@ -34,13 +36,13 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ memorized, total }) => {
   const percentage = total > 0 ? (memorized / total) * 100 : 0;
   return (
     <div className="w-full px-4 md:px-0">
-      <div className="flex justify-between mb-1 text-sm text-cyan-200/80">
-        <span>التقدم</span>
+      <div className="flex justify-between mb-2 text-sm font-medium text-cyan-400/80">
+        <span>التقدم في الحفظ</span>
         <span>{memorized} / {total} آيات</span>
       </div>
-      <div className="w-full bg-gray-700 rounded-full h-2.5">
+      <div className="w-full bg-slate-800 rounded-full h-3 shadow-inner">
         <div 
-          className="bg-cyan-400 h-2.5 rounded-full transition-all duration-500" 
+          className="bg-cyan-500 h-3 rounded-full transition-all duration-700 ease-out shadow-[0_0_12px_rgba(6,182,212,0.4)]" 
           style={{ width: `${percentage}%` }}
         ></div>
       </div>
@@ -190,16 +192,16 @@ interface VerseDisplayProps {
 
 const VerseDisplay: React.FC<VerseDisplayProps> = ({ ayah, isMemorized }) => (
   <div
-    className={`p-6 my-2 transition-all duration-500 rounded-lg border-r-4 bg-cyan-200/20 border-cyan-300`}
+    className={`p-8 my-4 transition-all duration-500 rounded-xl border border-slate-700/50 bg-slate-800/40 shadow-inner`}
   >
-    <p className={`font-amiri text-3xl md:text-4xl leading-relaxed text-right transition-colors duration-500 text-cyan-300`}>
+    <p className={`font-amiri text-4xl md:text-5xl leading-[1.8] text-right transition-colors duration-500 text-cyan-50 drop-shadow-sm`}>
       {ayah.text}
-      <span className={`relative inline-flex items-center justify-center text-sm font-sans font-bold text-cyan-400/80 mr-4 border border-cyan-400/50 rounded-full w-8 h-8`}>
+      <span className={`relative inline-flex items-center justify-center text-sm font-sans font-bold text-cyan-400/90 mr-6 border border-cyan-500/30 rounded-full w-10 h-10 bg-slate-900/50`}>
         {ayah.numberInSurah}
         {isMemorized && (
-             <span className="absolute -top-1 -right-1 flex h-4 w-4">
-                <span className="relative inline-flex rounded-full h-4 w-4 bg-yellow-500 items-center justify-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3 text-white" viewBox="0 0 24 24" fill="currentColor">
+             <span className="absolute -top-1 -right-1 flex h-5 w-5">
+                <span className="relative inline-flex rounded-full h-5 w-5 bg-yellow-500 items-center justify-center shadow-lg shadow-yellow-500/50">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5 text-white" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
                     </svg>
                 </span>
@@ -208,12 +210,12 @@ const VerseDisplay: React.FC<VerseDisplayProps> = ({ ayah, isMemorized }) => (
       </span>
     </p>
     {ayah.transliteration && (
-        <p className={`mt-4 text-base md:text-lg text-left transition-colors duration-500 text-cyan-200/80 font-sans`} dir="ltr">
+        <p className={`mt-6 text-base md:text-lg text-left transition-colors duration-500 text-slate-400 font-sans italic`} dir="ltr">
             {ayah.transliteration}
         </p>
     )}
     {ayah.translation && (
-        <p className={`mt-4 pt-4 border-t border-cyan-200/20 text-base md:text-lg text-left transition-colors duration-500 text-cyan-200`}>
+        <p className={`mt-4 pt-6 border-t border-slate-700/50 text-base md:text-lg text-left transition-colors duration-500 text-slate-300 leading-relaxed`}>
             {ayah.translation}
         </p>
     )}
@@ -231,26 +233,26 @@ const BookmarksList: React.FC<BookmarksListProps> = ({ ayahs, bookmarkedAyahs, o
   const bookmarked = ayahs.filter(ayah => bookmarkedAyahs.has(ayah.numberInSurah));
 
   return (
-    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={onClose} role="dialog" aria-modal="true" aria-labelledby="bookmarks-title">
-      <div className="bg-gray-800 rounded-2xl shadow-xl w-full max-w-md max-h-[80vh] flex flex-col" onClick={e => e.stopPropagation()}>
-        <div className="p-4 border-b border-white/10 flex justify-between items-center">
-          <h2 id="bookmarks-title" className="text-xl font-bold text-cyan-300">الآيات المحفوظة</h2>
-          <button onClick={onClose} className="text-white/70 hover:text-white text-2xl" aria-label="إغلاق الآيات المحفوظة">&times;</button>
+    <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4" onClick={onClose} role="dialog" aria-modal="true" aria-labelledby="bookmarks-title">
+      <div className="bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl w-full max-w-md max-h-[80vh] flex flex-col" onClick={e => e.stopPropagation()}>
+        <div className="p-5 border-b border-slate-800 flex justify-between items-center">
+          <h2 id="bookmarks-title" className="text-xl font-bold text-cyan-400">الآيات المحفوظة</h2>
+          <button onClick={onClose} className="text-slate-400 hover:text-white text-2xl transition-colors" aria-label="إغلاق الآيات المحفوظة">&times;</button>
         </div>
         <div className="overflow-y-auto p-4">
           {bookmarked.length > 0 ? (
-            <ul className="space-y-2">
+            <ul className="space-y-3">
               {bookmarked.map(ayah => (
                 <li key={ayah.numberInSurah}>
-                    <button onClick={() => onJumpToAyah(ayah.numberInSurah)} className="w-full text-right p-3 rounded-md hover:bg-white/10 cursor-pointer transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-400">
-                      <p className="font-amiri text-lg text-cyan-200">{ayah.text}</p>
-                      <p className="text-sm text-cyan-400/80 mt-1">آية {ayah.numberInSurah}</p>
+                    <button onClick={() => onJumpToAyah(ayah.numberInSurah)} className="w-full text-right p-4 rounded-xl bg-slate-800/50 hover:bg-slate-800 border border-slate-700/50 cursor-pointer transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-500">
+                      <p className="font-amiri text-xl text-cyan-50">{ayah.text}</p>
+                      <p className="text-sm text-cyan-500/70 mt-2">آية {ayah.numberInSurah}</p>
                     </button>
                 </li>
               ))}
             </ul>
           ) : (
-            <p className="text-center text-white/50 py-8">لم يتم حفظ أي آيات.</p>
+            <p className="text-center text-slate-500 py-12">لم يتم حفظ أي آيات بعد.</p>
           )}
         </div>
       </div>
@@ -277,36 +279,36 @@ const ReviewReminderModal: React.FC<ReviewReminderModalProps> = ({ count, onConf
   
   return (
     <div 
-      className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-opacity duration-300 animate-fadeIn" 
+      className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4 transition-opacity duration-300 animate-fadeIn" 
       onClick={onDismiss} 
       role="dialog" 
       aria-modal="true" 
       aria-labelledby="reminder-title"
     >
       <div 
-        className="bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl shadow-xl w-full max-w-sm text-center p-8 border border-cyan-400/20 transform transition-transform duration-300 animate-scaleUp" 
+        className="bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl w-full max-w-sm text-center p-10 transform transition-transform duration-300 animate-scaleUp" 
         onClick={e => e.stopPropagation()}
       >
-        <div className="text-yellow-400 mb-4">
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 mx-auto" viewBox="0 0 24 24" fill="currentColor">
+        <div className="text-yellow-400 mb-6">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-20 w-20 mx-auto drop-shadow-[0_0_15px_rgba(250,204,21,0.4)]" viewBox="0 0 24 24" fill="currentColor">
             <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
           </svg>
         </div>
-        <h2 id="reminder-title" className="text-2xl font-bold text-cyan-300 mb-2">ما شاء الله!</h2>
-        <p className="text-white/80 mb-6 text-lg">لقد أتممت حفظ {count} آيات. عمل رائع!</p>
-        <p className="text-white/90 mb-8">هل تود بدء مراجعة ما حفظت الآن؟</p>
-        <div className="flex justify-center gap-4">
-          <button 
-            onClick={onDismiss} 
-            className="px-6 py-2 rounded-lg bg-white/10 text-white/80 hover:bg-white/20 transition-colors"
-          >
-            لاحقاً
-          </button>
+        <h2 id="reminder-title" className="text-3xl font-bold text-cyan-400 mb-3">ما شاء الله!</h2>
+        <p className="text-slate-300 mb-6 text-lg">لقد أتممت حفظ {count} آيات. عمل رائع!</p>
+        <p className="text-slate-400 mb-10">هل تود بدء مراجعة ما حفظت الآن؟</p>
+        <div className="flex flex-col gap-3">
           <button 
             onClick={onConfirm} 
-            className="px-6 py-2 rounded-lg bg-cyan-400 text-gray-900 font-semibold hover:bg-cyan-300 transition-colors shadow-lg shadow-cyan-500/20"
+            className="w-full py-3 rounded-xl bg-cyan-500 text-slate-950 font-bold hover:bg-cyan-400 transition-all shadow-lg shadow-cyan-500/20 active:scale-[0.98]"
           >
             بدء المراجعة
+          </button>
+          <button 
+            onClick={onDismiss} 
+            className="w-full py-3 rounded-xl bg-slate-800 text-slate-300 font-semibold hover:bg-slate-700 transition-colors"
+          >
+            لاحقاً
           </button>
         </div>
       </div>
@@ -336,25 +338,26 @@ const SurahSelector: React.FC<{
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="text-3xl font-bold text-cyan-300 font-amiri tracking-wide flex items-center gap-2 hover:text-cyan-200 transition-colors"
+        className="text-3xl font-bold text-cyan-400 font-amiri tracking-wide flex items-center gap-3 hover:text-cyan-300 transition-colors"
         aria-haspopup="true"
         aria-expanded={isOpen}
       >
         {currentSurah.name}
-        <svg xmlns="http://www.w3.org/2000/svg" className={`h-5 w-5 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} viewBox="0 0 20 20" fill="currentColor">
+        <svg xmlns="http://www.w3.org/2000/svg" className={`h-6 w-6 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} viewBox="0 0 20 20" fill="currentColor">
           <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
         </svg>
       </button>
       {isOpen && (
-        <div className="absolute top-full mt-2 w-48 bg-gray-900/80 backdrop-blur-sm border border-white/10 rounded-lg shadow-lg z-10 animate-fadeIn origin-top">
-          <ul className="py-1">
+        <div className="absolute top-full mt-3 w-56 bg-slate-900 border border-slate-800 rounded-xl shadow-2xl z-20 animate-fadeIn origin-top overflow-hidden">
+          <ul className="py-2">
             {availableSurahs.map(surah => (
               <li key={surah.number}>
                 <button
                   onClick={() => { onSelect(surah); setIsOpen(false); }}
-                  className="w-full text-right px-4 py-2 text-white/80 hover:bg-white/10 hover:text-white transition-colors"
+                  className={`w-full text-right px-5 py-3 text-slate-300 hover:bg-slate-800 hover:text-cyan-400 transition-all flex items-center justify-between ${currentSurah.number === surah.number ? 'bg-slate-800/50 text-cyan-400' : ''}`}
                 >
-                  {surah.name}
+                  <span className="font-amiri text-lg">{surah.name}</span>
+                  <span className="text-xs font-sans opacity-50">{surah.englishName}</span>
                 </button>
               </li>
             ))}
