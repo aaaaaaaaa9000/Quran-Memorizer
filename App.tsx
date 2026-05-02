@@ -15,6 +15,7 @@ const availableSurahs: SurahInfo[] = [
   { number: 75, name: 'سورة القيامة', englishName: 'Al-Qiyamah' },
   { number: 73, name: 'سورة المزمل', englishName: 'Al-Muzzammil' },
   { number: 72, name: 'سورة الجن', englishName: 'Al-Jinn' },
+  { number: 71, name: 'سورة نوح', englishName: 'Nuh' },
 ];
 
 
