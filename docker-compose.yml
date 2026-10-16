@@ -1,11 +1,8 @@
-version: '3.8'
 services:
   app:
     build: .
     container_name: ai-app-quran-memorizer
     restart: unless-stopped
-    environment:
-      - NODE_ENV=production
     logging:
       driver: "json-file"
       options:
@@ -21,5 +18,5 @@ services:
       - "traefik.docker.network=automation-stack_automation-network"
 networks:
   default:
-    external:
-      name: automation-stack_automation-network
+    name: automation-stack_automation-network
+    external: true
