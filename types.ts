@@ -3,6 +3,7 @@ export interface Ayah {
   audio: string;
   text: string;
   translation?: string;
+  basmala?: string;
   transliteration?: string;
   numberInSurah: number;
   juz: number;

@@ -1,20 +1,53 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# مُحفِّظ القرآن الكريم للأطفال
 
-# Run and deploy your AI Studio app
+تطبيق ويب لتحفيظ القرآن الكريم للأطفال آية بآية بصوت الشيخ عبد الباسط عبد الصمد (مرتل).
 
-This contains everything you need to run your app locally.
+**الرابط:** https://quran-memorizer.aaaaaaaaa9000.cloud/
 
-View your app in AI Studio: https://ai.studio/apps/c37cb093-f10a-4de6-aa81-1520ef1dc56a
+## المميزات
 
-## Run Locally
+- كل سور القرآن الكريم (114 سورة) مع بحث بالاسم العربي أو الإنجليزي أو رقم السورة.
+- تشغيل الآية، وتكرار الآية مع وقفة بطول الآية ليرددها الطفل.
+- تحديد الآيات كمحفوظة (مع إمكانية الإلغاء وتصفير التقدم) وشريط تقدم لكل سورة.
+- وضع مراجعة يمر على الآيات المحفوظة فقط، وتذكير بالمراجعة كل 3 آيات جديدة.
+- علامات مرجعية لكل سورة.
+- يتذكر آخر سورة وآخر آية وصل لها الطفل في كل سورة.
+- البسملة تُعرض منفصلة أعلى الآية الأولى (ما عدا الفاتحة والتوبة).
+- التحكم في سرعة التلاوة (0.75x / 1x / 1.25x) وحجم خط الآيات.
+- وضع "راحة العين" الدافئ للقراءة الليلية.
+- تحكم من شاشة القفل وسماعات البلوتوث (Media Session).
+- قابل للتثبيت على الموبايل (PWA) ويعمل بدون إنترنت للسور والآيات التي سُمعت من قبل.
 
-**Prerequisites:**  Node.js
+### اختصارات لوحة المفاتيح
 
+| المفتاح | الوظيفة |
+|---|---|
+| مسافة | تشغيل / إيقاف |
+| ← | الآية التالية |
+| → | الآية السابقة |
+| M | تحديد / إلغاء تحديد الآية كمحفوظة |
+| B | علامة مرجعية |
+| R | تكرار الآية |
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## مصدر البيانات
+
+النص والترجمة والصوت من [AlQuran Cloud API](https://alquran.cloud/api)
+(`ar.abdulbasitmurattal`, `en.sahih`, `en.transliteration`). التقدم والإعدادات محفوظة في المتصفح (localStorage).
+
+## التشغيل محلياً
+
+المتطلبات: Node.js 20 أو أحدث.
+
+```bash
+npm install
+npm run dev      # http://localhost:3000
+npm run lint     # فحص TypeScript
+npm run build    # بناء نسخة الإنتاج في dist/
+```
+
+## النشر (Docker / Portainer)
+
+`Dockerfile` يبني التطبيق بـ Node 22 ثم يقدّمه عبر nginx (`nginx.conf`: ضغط gzip، كاش طويل لملفات `/assets`، و`/healthz` لفحص الصحة).
+
+`docker-compose.yml` يشغّل الحاوية على شبكة `automation-stack_automation-network` خلف Traefik.
+بعد دفع التعديلات: من Portainer افتح الـ Stack واعمل **Pull and redeploy** (مع إعادة بناء الصورة).
